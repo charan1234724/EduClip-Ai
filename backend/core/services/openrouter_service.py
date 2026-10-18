@@ -170,8 +170,10 @@ Each object must contain these fields:
         topics = json.loads(cleaned_text)
     except json.JSONDecodeError as exc:
         raise RuntimeError(
-            "OpenRouter did not return valid JSON. Please try again."
-        ) from exc
+        f"OpenRouter returned invalid JSON at line {exc.lineno}, "
+        f"column {exc.colno}: {exc.msg}. "
+        f"Response preview: {cleaned_text[:500]}"
+    ) from exc
 
     if not isinstance(topics, list) or len(topics) != 100:
         raise RuntimeError(
