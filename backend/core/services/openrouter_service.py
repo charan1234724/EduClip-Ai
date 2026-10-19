@@ -1,12 +1,43 @@
-
-
 import os
 from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
 
+def escape_control_chars_in_json_strings(text):
+    """Escape raw control characters inside JSON string values."""
+    result = []
+    inside_string = False
+    escaped = False
 
+    for char in text:
+        if inside_string:
+            if escaped:
+                result.append(char)
+                escaped = False
+            elif char == "\\":
+                result.append(char)
+                escaped = True
+            elif char == '"':
+                result.append(char)
+                inside_string = False
+            elif ord(char) < 32:
+                replacements = {
+                    "\n": r"\n",
+                    "\r": r"\r",
+                    "\t": r"\t",
+                }
+                result.append(
+                    replacements.get(char, f"\\u{ord(char):04x}")
+                )
+            else:
+                result.append(char)
+        else:
+            result.append(char)
+            if char == '"':
+                inside_string = True
+
+    return "".join(result)
 # Locate the EduClip-Ai project root.
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 ENV_FILE = PROJECT_ROOT / ".env"
@@ -165,6 +196,8 @@ Each object must contain these fields:
         if lines and lines[-1].strip() == "```":
             lines = lines[:-1]
         cleaned_text = "\n".join(lines).strip()
+
+    cleaned_text = escape_control_chars_in_json_strings(cleaned_text)
 
     try:
         topics = json.loads(cleaned_text)
