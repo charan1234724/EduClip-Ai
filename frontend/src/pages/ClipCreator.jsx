@@ -131,7 +131,7 @@ function ClipCreator() {
 
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/api/clips/",
+      "https://educlip-ai-backend-pro.onrender.com/api/clips/",
       {
         video: preparedClip.video_id,
         title: preparedClip.title,
@@ -180,7 +180,7 @@ function ClipCreator() {
 
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/api/ai/enhance-clip/",
+      "https://educlip-ai-backend-pro.onrender.com/api/ai/enhance-clip/",
       { text: sourceText }
     );
 
@@ -244,7 +244,7 @@ async function handleGenerateNarratedClip() {
 
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/api/narrated-clips/generate/",
+      "https://educlip-ai-backend-pro.onrender.com/api/narrated-clips/generate/",
       {
         video_path: videoPath,
         text: script,
@@ -277,7 +277,7 @@ function getNarratedClipUrl(relativePath) {
   .split("\\")
   .join("/")
   .replace(/^\/+/, "");
-  return `http://127.0.0.1:8000/media/${normalizedPath}`;
+  return `https://educlip-ai-backend-pro.onrender.com/media/${normalizedPath}`;
 }
 
 function handleUseEnhancedText() {

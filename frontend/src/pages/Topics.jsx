@@ -26,7 +26,7 @@ function Topics() {
 
   const fetchTopics = async () => {
     try {
-      const response = await api.get("/api/topics/");
+      const response = await api.get("/topics/");
       setTopics(response.data.topics);
       setError("");
     } catch (err) {
@@ -144,7 +144,7 @@ function Topics() {
         trend_score: Number(formData.trend_score),
       };
 
-      await api.post("/api/topics/", newTopic);
+      await api.post("/topics/", newTopic);
 
       setFormData({ ...initialFormData });
       setSuccess("Topic created successfully.");
@@ -171,7 +171,7 @@ function Topics() {
     setSuccess("");
 
     try {
-      const response = await api.post("/api/topics/generate/", {});
+      const response = await api.post("/topics/generate/", {});
 
       await fetchTopics();
 
