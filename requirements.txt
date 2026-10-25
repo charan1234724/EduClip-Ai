@@ -9,5 +9,5 @@ gunicorn
 dj-database-url
 psycopg2-binary
 whitenoise
-yt-dlp
+yt-dlp[default]==2026.10.23.233055
 edge-tts
