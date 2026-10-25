@@ -39,6 +39,7 @@ from core.services.pixabay_service import (
     download_pixabay_video,
     PixabayServiceError,
 )
+import imageio_ffmpeg
 from core.models import Video, GeneratedClip
 from core.services.ffmpeg_service import generate_video_clip
 
@@ -1355,6 +1356,7 @@ class TranscribeYouTubeView(APIView):
                     "no_warnings": True,
                     "socket_timeout": 30,
                     "max_filesize": 500 * 1024 * 1024,
+                    "ffmpeg_location": imageio_ffmpeg.get_ffmpeg_exe(),
                     "postprocessors": [{
                         "key": "FFmpegExtractAudio",
                         "preferredcodec": "mp3",
